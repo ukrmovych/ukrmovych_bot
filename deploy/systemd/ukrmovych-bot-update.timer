@@ -1,0 +1,9 @@
+[Unit]
+Description=Перевірка оновлень НМТ-бота кожні 5 хвилин
+
+[Timer]
+OnBootSec=3min
+OnUnitActiveSec=5min
+
+[Install]
+WantedBy=timers.target

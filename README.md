@@ -34,3 +34,19 @@ python -m bot
 - **Базовий режим**: 1 нова тема раз на 10 днів (`FREE_UNLOCK_DAYS`). Учасники закритого каналу (`PREMIUM_CHANNEL_ID`, бот має бути адміном каналу) отримують усі теми одразу.
 - **Повторювати своє**: користувач додає власні теми, бот нагадує про них за тим самим графіком.
 - **Тренажери** (синя кнопка біля поля вводу): якщо вказати `TRAINERS_URL`, бот сам налаштує кнопку меню як Web App.
+
+## Розгортання на безкоштовному сервері Google Cloud
+
+1. Відкрий [Google Cloud Shell](https://shell.cloud.google.com/?show=terminal).
+2. Встав команду й натисни Enter, далі встав токен бота:
+   ```bash
+   bash <(curl -fsSL https://raw.githubusercontent.com/ukrmovych/ukrmovych_bot/master/deploy/gcloud-create.sh)
+   ```
+
+Скрипт створює сервер `e2-micro` у `us-central1` (безкоштовний тариф), встановлює бота як сервіс і вмикає автооновлення: **кожні 5 хвилин сервер підтягує новий код з гілки `master`** і перезапускає бота. Тобто щоб оновити бота — достатньо запушити зміни.
+
+Подивитися логи бота (у Cloud Shell):
+```bash
+gcloud compute ssh ukrmovych-bot --zone us-central1-a --command "sudo journalctl -u ukrmovych-bot -n 50 --no-pager"
+```
+Змінити токен — просто запусти команду з п. 2 ще раз.

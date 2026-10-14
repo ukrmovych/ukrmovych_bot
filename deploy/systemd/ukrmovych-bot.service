@@ -1,0 +1,15 @@
+[Unit]
+Description=НМТ-качалка Telegram bot
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+User=bot
+WorkingDirectory=/opt/ukrmovych_bot
+EnvironmentFile=/var/lib/ukrmovych_bot/.env
+ExecStart=/opt/ukrmovych_bot/.venv/bin/python -m bot
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target
