@@ -331,6 +331,11 @@ async def cb_own_complete(call: CallbackQuery, db: Database) -> None:
 # ---------- будь-що інше ----------
 
 
+@router.callback_query(F.data == "soon")
+async def cb_soon(call: CallbackQuery) -> None:
+    await call.answer(T.SOON)
+
+
 @router.message(F.text & ~F.text.startswith("/"))
 async def any_text(message: Message) -> None:
     await message.answer(T.NAV, reply_markup=kb.nav())

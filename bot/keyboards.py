@@ -20,11 +20,13 @@ def features() -> InlineKeyboardMarkup:
 def nav() -> InlineKeyboardMarkup:
     return _kb(
         [Btn(text=T.BTN_REPEAT, callback_data="tp:r:0")],
-        [Btn(text=T.BTN_MATERIALS, callback_data="tp:m:0")],
-        [Btn(text=T.BTN_OWN, callback_data="own")],
-        [Btn(text=T.BTN_TIP, callback_data="tip")],
-        [Btn(text=T.BTN_ADMINS, callback_data="admins")],
-        [Btn(text=T.BTN_HELP, callback_data="help")],
+        # Поки неактивні ("soon"). Щоб увімкнути, повернути callback_data:
+        # "tp:m:0", "own", "tip", "admins", "help"
+        [Btn(text=T.BTN_MATERIALS, callback_data="soon")],
+        [Btn(text=T.BTN_OWN, callback_data="soon")],
+        [Btn(text=T.BTN_TIP, callback_data="soon")],
+        [Btn(text=T.BTN_ADMINS, callback_data="soon")],
+        [Btn(text=T.BTN_HELP, callback_data="soon")],
     )
 
 
@@ -55,7 +57,11 @@ def _test_button(topic: T.Topic) -> Btn:
 
 def repetition(topic: T.Topic) -> InlineKeyboardMarkup:
     return _kb(
-        [Btn(text=T.BTN_DO_REVIEW, callback_data=f"do:{topic.id}"), _test_button(topic)],
+        # Поки неактивні. Щоб увімкнути: callback_data=f"do:{topic.id}" і _test_button(topic)
+        [
+            Btn(text=T.BTN_DO_REVIEW, callback_data="soon"),
+            Btn(text=T.BTN_TEST, callback_data="soon"),
+        ],
         [Btn(text=T.BTN_BACK, callback_data="tp:r:0")],
     )
 
