@@ -52,4 +52,15 @@ else
     --metadata-from-file=bot-token="$TOKFILE",startup-script="$BOOT"
 fi
 
+say "Налаштовую сповіщення на пошту, якщо з'являться бодай якісь витрати..."
+BILLING=$(gcloud billing projects describe "$PROJECT" --format='value(billingAccountName)' 2>/dev/null | sed 's#billingAccounts/##' || true)
+if [ -n "$BILLING" ] \
+  && gcloud services enable billingbudgets.googleapis.com >/dev/null 2>&1 \
+  && ! gcloud billing budgets list --billing-account="$BILLING" --format='value(displayName)' 2>/dev/null | grep -qx ukrmovych-bot; then
+  gcloud billing budgets create --billing-account="$BILLING" --display-name=ukrmovych-bot \
+    --budget-amount=1USD --threshold-rule=percent=0.01 >/dev/null 2>&1 \
+    && echo "Готово: лист прийде, щойно витрати перевищать 0,01 \$." \
+    || echo "Не вийшло — це не критично, бот працюватиме."
+fi
+
 say "🎉 Готово! За 3–5 хвилин бот запрацює — напиши йому /start у Telegram."
